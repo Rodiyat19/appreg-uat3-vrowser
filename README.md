@@ -1,1 +1,1 @@
-# appreg-uat3-vrowser
+# appreg-uat3-browser
