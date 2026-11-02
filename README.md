@@ -17,8 +17,10 @@ No npm installation, build, backend or external CDN is needed. Stop the server w
 ## Record and export results
 
 - Select a scenario, or use search, suite and outcome filters. Previous and Next follow the current filtered list in workbook order.
+- Use **Select tester** to view only that person's allocated cases, or **All scenarios** to see everyone. Empty assignments appear as **Unassigned**. Progress and outcome totals cover the chosen tester across all suites, irrespective of search, suite and outcome filters.
+- Enter **Person completing the tests** independently of the allocation filter. The name is saved in this browser and recorded when you change a result or comment. Selecting a tester or entering your name alone never changes earlier results. Existing results without a recorded name show **Not recorded**.
 - Choose **Pass**, **Fail**, or **Partially Passed** and enter comments. Changes save immediately in this browser. Clear outcome returns the case to Not Started and keeps its comments.
-- **Download results PDF** includes every scenario with an outcome, across all suites, irrespective of filters. It includes the original scenario content, comments, outcome counts, untested count, source workbook, session date and export timestamp. Comments alone do not complete a case.
+- **Download results PDF** includes completed cases for the selected tester (or everyone with **All scenarios**), across all suites and irrespective of search, suite and outcome filters. It includes each case's assigned tester and recorded completer, the current completing person's name, original scenario content, comments, outcome counts, untested count, source workbook, allocation workbook, session date and export timestamp. Comments alone do not complete a case.
 - Historical results are labelled separately and never count as current outcomes.
 
 There is one run per browser profile and workbook version. Results are local to the browser and website origin, not shared between testers, computers, localhost and GitHub Pages. Private browsing, clearing website data or changing workbook versions may make stored results unavailable. Download the PDF before clearing browser data. If storage fails, the page keeps results in memory and displays an alert so you can export them.
@@ -39,6 +41,7 @@ preview.ps1                      Local preview using an available Python interpr
 assets/styles.css                Responsive layout based on supplied screenshots
 assets/app.js                    Navigation, filtering and browser-local results
 assets/scenarios.js              Generated workbook content and source references
+assets/allocations.js            Assigned Tester values matched by unique case ID
 assets/pdf.js                    Direct PDF generation and pagination
 assets/vendor/                   Local PDF libraries, font and licences/notices
 scripts/extract_scenarios.py      Repeatable extraction and exact validation
@@ -65,6 +68,19 @@ python scripts/extract_scenarios.py "C:\path\to\Application-Register-UAT-2026-11
 ```
 
 Validation requires exactly 107 unique cases, the expected suite totals, the existing numbering gaps, and an exact match of every source field and its order. Results use the source workbook's SHA-256 hash plus case code as their local-storage key, so source versions do not mix results.
+
+### Update tester allocations without changing scenarios or results
+
+The current assignments come from `Run Results` → `Assigned Tester` in `Application-Register-UAT-2026-11-09-REVIEW-FINAL (1).xlsx` (the populated copy in Downloads). This copy also contains edits to scenario content. Only assignments were imported: the existing scenario wording, IDs, order, source version and saved-result keys remain unchanged.
+
+```powershell
+python scripts/extract_scenarios.py "C:\path\to\allocation-workbook.xlsx" --assignments-only
+python scripts/extract_scenarios.py "C:\path\to\allocation-workbook.xlsx" --assignments-only --check
+```
+
+This reads the Assigned Tester header and joins rows by their unique case-code prefix, never by row position or display title. It requires exactly the existing case IDs and rejects duplicate, missing or unexpected IDs. Assignment values are stored separately in `assets/allocations.js`. Blank values are displayed as Unassigned. Allocation-only updates do not reset or migrate any saved outcomes or comments.
+
+Preview allocation changes locally with `.\preview.ps1` before publishing updates.
 
 ## Browser checks
 

@@ -1,6 +1,7 @@
 /* Direct, text-based PDF download. No remote requests or printing dialog. */
-window.createResultsPdf = async function(data, completed) {
+window.createResultsPdf = async function(data, completed, options) {
   'use strict';
+  options = options || {};
   const {PDFDocument, rgb} = window.PDFLib;
   const doc = await PDFDocument.create();
   doc.registerFontkit(window.fontkit);
@@ -44,10 +45,14 @@ window.createResultsPdf = async function(data, completed) {
   text('UAT session: 9 November 2026',11,ink,6);
   text('Exported: '+new Date().toLocaleString('en-GB',{timeZone:'Europe/London'})+' (Europe/London)',9,muted,8);
   text('Source: '+data.source,9,muted,15);
-  text(`${completed.length} of ${data.scenarios.length} scenarios completed`,14,teal,10);
+  text('Allocations: '+window.UAT_ALLOCATIONS.source,9,muted,8);
+  text('Tester selection: '+(options.selection || 'All scenarios'),10,teal,8);
+  text('Person completing tests: '+(options.completingTester || 'Not recorded'),10,ink,12);
+  const total = options.total ?? data.scenarios.length;
+  text(`${completed.length} of ${total} scenarios completed`,14,teal,10);
   for(const outcome of ['Pass','Fail','Partially Passed'])text(`${outcome}: ${completed.filter(s=>s.result.outcome===outcome).length}`,11,ink,4);
-  text(`Not Started: ${data.scenarios.length-completed.length}`,11,ink,15);
-  text('This report includes completed scenarios from all suites in workbook order. Historical results are not counted in this run.',10,muted,12);
+  text(`Not Started: ${total-completed.length}`,11,ink,15);
+  text('This report includes completed scenarios for the tester selection across all suites in workbook order. Historical results are not counted in this run. Earlier results without a recorded completer are labelled Not recorded.',10,muted,12);
   for(const s of completed) {
     newPage();
     text(s.suite,10,teal,8);
@@ -55,6 +60,8 @@ window.createResultsPdf = async function(data, completed) {
     text(s.title,17,ink,12);
     text(s.caseKey,9,muted,5);
     text(`${data.sheet}, row ${s.sourceRow} · ${s.history}`,9,muted,12);
+    text('Assigned Tester: '+(s.assignedTester || String(window.UAT_ALLOCATIONS.assignments[s.id] || '').trim() || 'Unassigned'),10,teal,6);
+    text('Completed by: '+(s.result.completedBy || 'Not recorded'),10,ink,12);
     section('Business goal',s.goal);
     section('Preconditions',s.preconditions);
     section('Given / When / And — Steps',s.steps);

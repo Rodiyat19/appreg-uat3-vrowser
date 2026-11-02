@@ -7,6 +7,7 @@
   <title>Application Register · UAT scenarios</title>
   <link rel="stylesheet" href="assets/styles.css">
   <script defer src="assets/scenarios.js"></script>
+  <script defer src="assets/allocations.js"></script>
   <script defer src="assets/vendor/pdf-lib.min.js"></script>
   <script defer src="assets/vendor/fontkit.umd.min.js"></script>
   <script defer src="assets/pdf.js"></script>
@@ -20,12 +21,16 @@
     <div class="session"><span class="session-dot" aria-hidden="true"></span> UAT session <strong>9 November 2026</strong></div>
   </header>
   <main>
+    <section class="tester-controls" aria-label="Tester allocation">
+      <div><label for="tester">Select tester</label><select id="tester"><option value="">All scenarios</option></select></div>
+      <div><label for="completing-tester">Person completing the tests</label><input id="completing-tester" type="text" autocomplete="name" placeholder="Enter your name" aria-describedby="completing-hint"><p id="completing-hint" class="hint">Your name is recorded when you change an outcome or comment. Earlier results keep their attribution.</p></div>
+    </section>
     <section class="toolbar" aria-label="Test run progress">
-      <div><p class="eyebrow">YOUR TEST RUN</p><p class="progress-copy"><strong id="completed-count">0</strong> <span id="total-copy">of 107 scenarios completed</span></p><progress id="progress" max="107" value="0" aria-label="Completed scenarios"></progress></div>
+      <div><p id="run-label" class="eyebrow">YOUR TEST RUN</p><p class="progress-copy"><strong id="completed-count">0</strong> <span id="total-copy">of 107 scenarios completed</span></p><progress id="progress" max="107" value="0" aria-label="Completed scenarios"></progress></div>
       <div class="totals" aria-label="Outcome totals"><span class="count pass">Pass <strong id="pass-count">0</strong></span><span class="count fail">Fail <strong id="fail-count">0</strong></span><span class="count partial">Partially Passed <strong id="partial-count">0</strong></span></div>
       <button id="download" class="button primary" disabled>Download results PDF <span aria-hidden="true">↓</span></button>
     </section>
-    <div class="save-line"><span id="save-state" role="status">Results are saved automatically in this browser.</span><span>PDF includes completed scenarios across all suites.</span></div>
+    <div class="save-line"><span id="save-state" role="status">Results are saved automatically in this browser.</span><span id="pdf-scope">PDF includes completed scenarios across all suites.</span></div>
     <p id="storage-warning" class="notice" role="alert" hidden></p>
     <p id="export-message" class="notice" role="status" hidden></p>
     <div class="workspace">
@@ -44,6 +49,7 @@
         <p id="scenario-code" class="eyebrow"></p>
         <h2 id="scenario-heading" tabindex="-1"></h2>
         <div class="source-meta"><span id="case-key"></span><span id="history" class="history"></span></div>
+        <dl class="allocation-details"><div><dt>Assigned Tester</dt><dd id="assigned-tester"></dd></div><div><dt>Completed by</dt><dd id="completed-by">Not recorded</dd></div></dl>
         <section class="content-section"><h3>Business goal</h3><div id="goal" class="source-text"></div></section>
         <section class="content-section"><h3>Preconditions</h3><div id="preconditions" class="source-text"></div></section>
         <section class="content-section"><h3>Given / When / And — Steps</h3><div id="steps" class="source-text steps"></div></section>

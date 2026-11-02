@@ -32,7 +32,18 @@ assert compact(expected["comment"]) in sample_text, "Long/Unicode comment change
 assert "NotStarted:104" in sample_text
 assert all(label in sample_text for label in ["Pass:1", "Fail:1", "PartiallyPassed:1"])
 assert compact(expected["source"]["scenarios"][3]["title"]) not in sample_text
-for name in ["all-scenarios.pdf", "sample-results.pdf"]:
+assert 'Personcompletingtests:Reviewtester' in sample_text
+assert 'Completedby:Reviewtester' in sample_text
+assert 'AssignedTester:Lanre' in sample_text
+tester_text = compact(body(PdfReader(ROOT / "tester-results.pdf")))
+assert 'Testerselection:Lanre' in tester_text
+assert '3of15scenarioscompleted' in tester_text and 'NotStarted:12' in tester_text
+assert all(label in tester_text for label in ['Pass:1', 'Fail:1', 'PartiallyPassed:1'])
+unassigned_text = compact(body(PdfReader(ROOT / "unassigned-results.pdf")))
+assert 'AssignedTester:Unassigned' in unassigned_text
+assert 'Completedby:Unassignedcasetester' in unassigned_text
+assert '1of1scenarioscompleted' in unassigned_text
+for name in ["all-scenarios.pdf", "sample-results.pdf", "tester-results.pdf", "unassigned-results.pdf"]:
     with pdfplumber.open(ROOT / name) as pdf:
         for i, page in enumerate(pdf.pages):
             for char in page.chars:
