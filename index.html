@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Application Register UAT scenarios and local test results.">
+  <title>Application Register · UAT scenarios</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <script defer src="assets/scenarios.js"></script>
+  <script defer src="assets/vendor/pdf-lib.min.js"></script>
+  <script defer src="assets/vendor/fontkit.umd.min.js"></script>
+  <script defer src="assets/pdf.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#scenario-heading">Skip to scenario</a>
+  <header class="masthead">
+    <div class="brand-mark" aria-hidden="true">AR</div>
+    <div><p class="eyebrow">APPLICATION REGISTER</p><h1>UAT scenario browser</h1></div>
+    <div class="session"><span class="session-dot" aria-hidden="true"></span> UAT session <strong>9 November 2026</strong></div>
+  </header>
+  <main>
+    <section class="toolbar" aria-label="Test run progress">
+      <div><p class="eyebrow">YOUR TEST RUN</p><p class="progress-copy"><strong id="completed-count">0</strong> <span id="total-copy">of 107 scenarios completed</span></p><progress id="progress" max="107" value="0" aria-label="Completed scenarios"></progress></div>
+      <div class="totals" aria-label="Outcome totals"><span class="count pass">Pass <strong id="pass-count">0</strong></span><span class="count fail">Fail <strong id="fail-count">0</strong></span><span class="count partial">Partially Passed <strong id="partial-count">0</strong></span></div>
+      <button id="download" class="button primary" disabled>Download results PDF <span aria-hidden="true">↓</span></button>
+    </section>
+    <div class="save-line"><span id="save-state" role="status">Results are saved automatically in this browser.</span><span>PDF includes completed scenarios across all suites.</span></div>
+    <p id="storage-warning" class="notice" role="alert" hidden></p>
+    <p id="export-message" class="notice" role="status" hidden></p>
+    <div class="workspace">
+      <aside class="sidebar" aria-label="Scenario navigation">
+        <div class="sidebar-tools">
+          <div class="section-title"><h2>Scenarios</h2><span id="visible-count">107</span></div>
+          <label for="search">Search scenarios</label><input id="search" type="search" placeholder="Search ID, title or content…">
+          <div class="filter-grid"><div><label for="suite">Suite</label><select id="suite"><option value="">All suites</option></select></div><div><label for="outcome-filter">Outcome</label><select id="outcome-filter"><option value="">All outcomes</option><option>Not Started</option><option>Pass</option><option>Fail</option><option>Partially Passed</option></select></div></div>
+          <button id="clear-filters" class="text-button" hidden>Clear filters</button>
+        </div>
+        <nav id="scenario-list" aria-label="Choose a scenario"></nav>
+        <p id="no-matches" class="empty" hidden>No scenarios match these filters. Try another search or clear the filters.</p>
+      </aside>
+      <article id="scenario" class="detail" aria-labelledby="scenario-heading">
+        <div class="scenario-meta"><span id="position"></span><span id="suite-label" class="suite-label"></span></div>
+        <p id="scenario-code" class="eyebrow"></p>
+        <h2 id="scenario-heading" tabindex="-1"></h2>
+        <div class="source-meta"><span id="case-key"></span><span id="history" class="history"></span></div>
+        <section class="content-section"><h3>Business goal</h3><div id="goal" class="source-text"></div></section>
+        <section class="content-section"><h3>Preconditions</h3><div id="preconditions" class="source-text"></div></section>
+        <section class="content-section"><h3>Given / When / And — Steps</h3><div id="steps" class="source-text steps"></div></section>
+        <section class="content-section"><h3>Then / Expected results</h3><div class="expected-panel"><div id="expected" class="source-text"></div></div></section>
+        <section class="result-section" aria-label="Record your result">
+          <fieldset><legend>Record result</legend><p class="hint">Choose an outcome for this run.</p><div class="outcomes"><label class="outcome pass"><input type="radio" name="result" value="Pass">Pass</label><label class="outcome fail"><input type="radio" name="result" value="Fail">Fail</label><label class="outcome partial"><input type="radio" name="result" value="Partially Passed">Partially Passed</label></div></fieldset>
+          <div class="comments-label"><label for="comments">Comments / observations</label><button id="clear-result" class="text-button" disabled>Clear outcome</button></div>
+          <p class="hint" id="comments-hint">Record what happened, including any defect references or evidence links.</p><textarea id="comments" rows="5" aria-describedby="comments-hint" placeholder="Add your observations…"></textarea>
+        </section>
+        <footer class="detail-footer"><div class="navigation"><button id="previous" class="button">← Previous</button><button id="next" class="button">Next scenario →</button></div><span id="source-reference"></span></footer>
+      </article>
+      <section id="empty-detail" class="detail empty-detail" hidden><h2>No matching scenarios</h2><p>Change your search or filters to continue testing.</p></section>
+    </div>
+    <footer class="page-footer"><span>Application Register Modernisation · User acceptance testing</span><span>Results stay on this device. Download your PDF before clearing browser data.</span></footer>
+  </main>
+  <noscript>This browser needs JavaScript to display the workbook scenarios and record results.</noscript>
+</body>
+</html>
