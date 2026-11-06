@@ -1,6 +1,7 @@
 window.UAT_DATA = {
-  "source": "Application-Register-UAT-2026-11-09-REVIEW-FINAL.xlsx",
+  "source": "AppReg-UAT-Business-Allocation (1).xlsx",
   "version": "7fb43b7fe1b31ae0a5b9063ac60f993ae8f839f1230904230b49bc3fabd80b06",
+  "sourceHash": "6935ff1d9ddadcb1a0d3a4a057e1e11b468843f12249415c3fa4080639ea03d3",
   "sessionDate": "2026-11-09",
   "sheet": "Test Steps",
   "scenarios": [
@@ -10,7 +11,7 @@ window.UAT_DATA = {
       "scenarioId": "UAT 1",
       "title": "Create a New Application List",
       "goal": "Confirm a user can create a new Application List with the expected mandatory information.",
-      "preconditions": "User is logged in with permission to create lists.",
+      "preconditions": "The user is logged in to AppReg.",
       "steps": "Given I am on the Applications List screen\nWhen I create a new list and complete all mandatory fields\nAnd I select either Court or CJA with Other Location in line with business rules\nAnd I save the list",
       "expected": "The list is saved successfully\nThe default status is Open\nThe list appears in search results",
       "sourceComments": null,
@@ -26,10 +27,10 @@ window.UAT_DATA = {
       "scope": "Planned",
       "scenarioId": "UAT 1a",
       "title": "List Description Character Limit on Create and Update",
-      "goal": "Confirm the List description field is a textarea with a visible 200-character limit and live remaining-character counter on Create and Update.",
-      "preconditions": "The user can create and update Application Lists. An Application List is available to update.",
-      "steps": "Given I am creating or updating an Application List\nWhen I check the List description field on the Create or Update page\nAnd I enter and remove characters\nAnd I try to type or paste beyond 200 characters\nAnd I save the description",
-      "expected": "The List description field is a GOV.UK styled textarea with a visible 200-character counter on Create and Update\nThe counter updates as characters are entered or removed\nTyping or pasting beyond 200 characters is prevented\nThe saved description does not exceed 200 characters\nExisting validation and error-summary behaviour is retained",
+      "goal": "Confirm the List description field is a textarea with a visible 200-character limit and live remaining-character counter on Create and Update, and that Application List Search retains its existing Description text-input behaviour.",
+      "preconditions": "The user can create and update Application Lists and use Application List Search. An Application List is available to update.",
+      "steps": "Given I am creating or updating an Application List\nWhen I check the List description field on the Create or Update page\nAnd I enter and remove characters\nAnd I try to type or paste beyond 200 characters\nAnd I save the description\nAnd I open Application List Search\nAnd I review the Description field",
+      "expected": "The List description field is a GOV.UK styled textarea with a visible 200-character counter on Create and Update\nThe counter updates as characters are entered or removed\nTyping or pasting beyond 200 characters is prevented\nThe saved description does not exceed 200 characters\nExisting validation and error-summary behaviour is retained\nOn Application List Search, the Description field remains a standard text input without a character counter.",
       "sourceComments": null,
       "history": "New for this UAT",
       "id": "CORE-01A",
@@ -69,8 +70,8 @@ window.UAT_DATA = {
       "id": "CORE-01C",
       "suite": "Core AppReg",
       "sourceRow": 9,
-      "runResultsRow": 98,
-      "runResultsCaseKey": "CORE-01C -  Ticket 1805"
+      "runResultsRow": 9,
+      "runResultsCaseKey": "CORE-01C - Ticket 1805"
     },
     {
       "caseKey": "CORE-02",
@@ -86,7 +87,7 @@ window.UAT_DATA = {
       "id": "CORE-02",
       "suite": "Core AppReg",
       "sourceRow": 10,
-      "runResultsRow": 9,
+      "runResultsRow": 10,
       "runResultsCaseKey": "CORE-02"
     },
     {
@@ -103,14 +104,14 @@ window.UAT_DATA = {
       "id": "CORE-03",
       "suite": "Core AppReg",
       "sourceRow": 11,
-      "runResultsRow": 10,
+      "runResultsRow": 11,
       "runResultsCaseKey": "CORE-03"
     },
     {
       "caseKey": "CORE-03A \u2013 Ticket 1852",
       "scope": "Planned",
-      "scenarioId": "\tUAT 2c",
-      "title": "\tKeep Section Labels in Sync After an Application Code Change",
+      "scenarioId": "UAT 2c",
+      "title": "Keep Section Labels in Sync After an Application Code Change",
       "goal": "Confirm the Respondent and Civil fee controls reflect and toggle the sections\u2019 expanded or collapsed state after the application code changes.",
       "preconditions": "The user can create an Application List Entry on an open Application List. Application codes MX99006 and SW99062 are available.",
       "steps": "Given I have opened an open Application List and selected Create application\nWhen I select Show all sections\nAnd I enter application code MX99006\nAnd I change the application code to SW99062\nAnd I check the Respondent and Civil fee sections\nAnd I select Show or Hide on each section",
@@ -120,25 +121,25 @@ window.UAT_DATA = {
       "id": "CORE-03A",
       "suite": "Core AppReg",
       "sourceRow": 12,
-      "runResultsRow": 99,
-      "runResultsCaseKey": "CORE-03A -  Ticket 1852"
+      "runResultsRow": 12,
+      "runResultsCaseKey": "CORE-03A - Ticket 1852"
     },
     {
-      "caseKey": "CORE-04",
+      "caseKey": "CORE-04 - Ticket 1846",
       "scope": "Planned",
       "scenarioId": "UAT 3a",
-      "title": "Create a New Application List Entry with an Organisation Applicant (Fee Required, Respondent Required)",
-      "goal": "Confirm a user can create an organisation applicant entry with a required respondent and fee.",
-      "preconditions": "An open Application List exists; the selected application code requires respondent and fee.",
-      "steps": "Given I have opened an open Application List\nWhen I select Create Application\nAnd I choose Organisation in the Applicant type field\nAnd I enter the Organisation Name and Address Line 1\nAnd I populate the mandatory respondent fields\nAnd I enter the required application and fee details and save",
-      "expected": "The Application List Entry is created successfully\nThe applicant and respondent are saved as organisations\nA success banner is displayed\nThe Summary displays both applicant and respondent",
+      "title": "Create an Organisation Entry and Check Unsaved Changes on Create/Update (Fee Required, Respondent Required)",
+      "goal": "Confirm an organisation applicant entry can be created with the required respondent and fee. Confirm unsaved changes on entry Create and Update pages trigger a warning, users can stay or leave and discard changes, and no warning appears when there are no unsaved changes.",
+      "preconditions": "An open Application List and an application code requiring respondent and fee are available. An existing entry with saved application or result wording is available to update.",
+      "steps": "Create: leave and stay\nGiven I have opened an open Application List and selected Create Application\nWhen I choose Organisation and enter Organisation Name and Address Line 1\nAnd I select Cancel and choose to leave the page in the warning\nAnd I start again and re-enter the organisation details\nAnd I select Cancel and choose to stay on the page in the warning\nAnd I complete the mandatory respondent, application and fee details and save\n\nUpdate: stay and discard\nGiven I have opened an existing entry in update mode\nWhen I change application wording or result wording without selecting the main Save/Update action\nAnd I attempt to leave the page and choose to stay in the warning\nAnd I review the unsaved wording\nAnd I attempt to leave again and choose to leave and discard changes\nAnd I reopen the entry and review the saved wording\n\nNo unsaved changes\nGiven I am on an entry Create or Update page without making changes\nWhen I leave the page\nAnd I repeat the check on an Update page after saving my changes",
+      "expected": "Create\nCancel with unsaved information displays a warning offering leave or stay.\nLeaving creates no entry; starting again requires re-entering the discarded information.\nStaying retains the entered information. Completing and saving creates the entry, saves applicant and respondent as organisations, displays a success banner, and shows both parties in the Summary.\n\nUpdate\nAttempting to leave with unsaved wording displays the warning.\nStaying retains the unsaved wording and allows editing to continue.\nLeaving discards the unsaved wording; reopening shows the previously saved wording.\n\nNo unsaved changes\nNo warning appears when leaving an unchanged Create or Update page, or after changes have been saved.",
       "sourceComments": null,
       "history": "Previously tested",
       "id": "CORE-04",
       "suite": "Core AppReg",
       "sourceRow": 13,
-      "runResultsRow": 11,
-      "runResultsCaseKey": "CORE-04"
+      "runResultsRow": 13,
+      "runResultsCaseKey": "CORE-04 - Ticket 1846"
     },
     {
       "caseKey": "CORE-05",
@@ -154,7 +155,7 @@ window.UAT_DATA = {
       "id": "CORE-05",
       "suite": "Core AppReg",
       "sourceRow": 14,
-      "runResultsRow": 12,
+      "runResultsRow": 14,
       "runResultsCaseKey": "CORE-05"
     },
     {
@@ -171,8 +172,25 @@ window.UAT_DATA = {
       "id": "CORE-06",
       "suite": "Core AppReg",
       "sourceRow": 15,
-      "runResultsRow": 13,
+      "runResultsRow": 15,
       "runResultsCaseKey": "CORE-06"
+    },
+    {
+      "caseKey": "SA-18",
+      "scope": "Planned",
+      "scenarioId": "STD APP 17a / 17b",
+      "title": "Standard Applicant Selection and Validation on an Application List Entry",
+      "goal": "Valid Standard Applicant (17a)\nSummary: Confirm a user can select an active Standard Applicant when creating or updating an Application List Entry\n\nBusiness goal: As a court user, I need to select a Standard Applicant in an application entry so that common applicant details can be reused without re-keying\n\nUnknown or inactive Standard Applicant (17b)\nSummary: Confirm an Application List Entry cannot be saved with an unknown or inactive Standard Applicant\n\nBusiness goal: As a court user, I need invalid Standard Applicant references to be rejected so that application entries are not linked to unusable applicant records",
+      "preconditions": "Valid Standard Applicant (17a)\nAn active Standard Applicant exists and an Application List Entry is being created or updated\n\nUnknown or inactive Standard Applicant (17b)\nUser is creating or updating an Application List Entry with applicant type set to Standard Applicant",
+      "steps": "Valid Standard Applicant (17a)\nGiven I am creating or updating an Application List Entry\nWhen I choose Standard Applicant as the applicant type\nAnd I search for and select an active Standard Applicant\nAnd I complete the remaining mandatory application details\nAnd I save the application\n\nUnknown or inactive Standard Applicant (17b)\nGiven I am creating or updating an Application List Entry\nWhen I supply an unknown, expired or inactive Standard Applicant code\nAnd I attempt to save the application",
+      "expected": "Valid Standard Applicant (17a)\nThe Application List Entry is saved successfully\nThe selected Standard Applicant code is linked to the entry\nThe selected Standard Applicant name appears in the application summary\nPerson or Organisation applicant fields are not submitted at the same time\nThe Standard Applicant can be used in print and summary views for the entry\n\nUnknown or inactive Standard Applicant (17b)\nThe application is not saved with the invalid Standard Applicant reference\nA validation message identifies the Standard Applicant problem\nI can select an active Standard Applicant and retry\nNo person or organisation applicant details are silently substituted",
+      "sourceComments": null,
+      "history": "New for this UAT",
+      "id": "SA-18",
+      "suite": "Core AppReg",
+      "sourceRow": 16,
+      "runResultsRow": 16,
+      "runResultsCaseKey": "SA-18"
     },
     {
       "caseKey": "CORE-07",
@@ -187,14 +205,31 @@ window.UAT_DATA = {
       "history": "Previously tested",
       "id": "CORE-07",
       "suite": "Core AppReg",
-      "sourceRow": 16,
-      "runResultsRow": 14,
+      "sourceRow": 17,
+      "runResultsRow": 17,
       "runResultsCaseKey": "CORE-07"
+    },
+    {
+      "caseKey": "CORE-07A - Ticket 1930",
+      "scope": "Planned",
+      "scenarioId": "UAT 5b",
+      "title": "Search Application List Entries Using Filters",
+      "goal": "Confirm a user can find child Application List Entries within an Application List using the available filters, including Application title suggestions in Advanced search.",
+      "preconditions": "An Application List contains multiple child entries with known searchable values. Test data includes a title and a partial title matching entries, text with no matching title suggestions, and title criteria matching no entries in this list.",
+      "steps": "Search using filters\nGiven I have opened the Applications tab on an Application List containing child entries\nWhen I enter one or more filters: Applicant, Respondent or Respondent postcode\nAnd, where appropriate, I expand Advanced search to use Sequence number, Account number, Application title, Fee or Resulted\nAnd I select Search and review the matching entries\n\nApplication title suggestions (1930)\nWhen I clear the previous search and expand Advanced search\nAnd I start typing an Application title, select a suggested title and select Search\n\nPartial title search\nWhen I clear the previous search and enter a partial Application title without selecting a complete suggestion\nAnd I select Search and review the matching entries\n\nNo matching suggestions\nWhen I clear the previous search and type text with no matching Application title suggestions\nAnd I review the suggestions component\n\nNo matching entries\nWhen I clear the previous search and enter Application title criteria matching no entries in this list\nAnd I select Search and review the results",
+      "expected": "The table shows entries from the opened Application List matching the supplied filters.\nApplication title suggestions appear as I type, and selecting a suggestion filters the entries by that title.\nSearching with a partial title returns entries matching that partial title.\nText with no matching suggestions offers no unrelated title suggestions and does not cause an error.\nA search with no matching entries displays an empty result with a clear no-results indication, without stale entries from the previous search.",
+      "sourceComments": null,
+      "history": "New for this UAT",
+      "id": "CORE-07A",
+      "suite": "Core AppReg",
+      "sourceRow": 18,
+      "runResultsRow": 18,
+      "runResultsCaseKey": "CORE-07A - Ticket 1930"
     },
     {
       "caseKey": "CORE-07B - Ticket 1849",
       "scope": "Planned",
-      "scenarioId": "UAT 5b",
+      "scenarioId": "UAT 5c",
       "title": "Selected Application Count Across Pages",
       "goal": "Confirm the selected application count includes selections across pages, updates when entries are selected or deselected, and remains accurate after filtering and Select All.",
       "preconditions": "An open Application List contains entries across at least two pages, and a filter can be applied.",
@@ -204,14 +239,14 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "CORE-07B",
       "suite": "Core AppReg",
-      "sourceRow": 17,
-      "runResultsRow": 15,
+      "sourceRow": 19,
+      "runResultsRow": 19,
       "runResultsCaseKey": "CORE-07B - Ticket 1849"
     },
     {
       "caseKey": "CORE-07C \u2013 Ticket 1848",
       "scope": "Planned",
-      "scenarioId": "UAT 5c",
+      "scenarioId": "UAT 5d",
       "title": "Show the Imported Count for a Bulk Upload",
       "goal": "Confirm the completion message reports the number of applications imported by the current upload.",
       "preconditions": "An open Application List is available. A valid CSV with 12 application records and a header row is ready.",
@@ -221,14 +256,14 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "CORE-07C",
       "suite": "Core AppReg",
-      "sourceRow": 18,
-      "runResultsRow": 100,
-      "runResultsCaseKey": "CORE-07C -  Ticket 1848"
+      "sourceRow": 20,
+      "runResultsRow": 20,
+      "runResultsCaseKey": "CORE-07C - Ticket 1848"
     },
     {
       "caseKey": "CORE-07D \u2013 Ticket 1848",
       "scope": "Planned",
-      "scenarioId": "UAT 5d",
+      "scenarioId": "UAT 5e",
       "title": "Show Singular Wording for One Imported Application",
       "goal": "Confirm the completion message uses singular wording when one application is imported.",
       "preconditions": "An open Application List is available. A valid CSV with one application record and a header row is ready.",
@@ -238,14 +273,14 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "CORE-07D",
       "suite": "Core AppReg",
-      "sourceRow": 19,
-      "runResultsRow": 101,
-      "runResultsCaseKey": "CORE-07D -  Ticket 1848"
+      "sourceRow": 21,
+      "runResultsRow": 21,
+      "runResultsCaseKey": "CORE-07D - Ticket 1848"
     },
     {
       "caseKey": "CORE-07E \u2013 Ticket 1848",
       "scope": "Planned",
-      "scenarioId": "UAT 5e",
+      "scenarioId": "UAT 5f",
       "title": "Do Not Report Failed Uploads as Successful",
       "goal": "Confirm a failed or rolled-back upload is not reported as a successful import.",
       "preconditions": "An open Application List is available. Test data can produce a failed or rolled-back upload.",
@@ -255,8 +290,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "CORE-07E",
       "suite": "Core AppReg",
-      "sourceRow": 20,
-      "runResultsRow": 102,
+      "sourceRow": 22,
+      "runResultsRow": 22,
       "runResultsCaseKey": "CORE-07E - Ticket 1848"
     },
     {
@@ -272,8 +307,8 @@ window.UAT_DATA = {
       "history": "Previously tested",
       "id": "CORE-08",
       "suite": "Core AppReg",
-      "sourceRow": 21,
-      "runResultsRow": 16,
+      "sourceRow": 23,
+      "runResultsRow": 23,
       "runResultsCaseKey": "CORE-08"
     },
     {
@@ -289,8 +324,8 @@ window.UAT_DATA = {
       "history": "Previously tested",
       "id": "CORE-09",
       "suite": "Core AppReg",
-      "sourceRow": 22,
-      "runResultsRow": 17,
+      "sourceRow": 24,
+      "runResultsRow": 24,
       "runResultsCaseKey": "CORE-09"
     },
     {
@@ -306,8 +341,8 @@ window.UAT_DATA = {
       "history": "Previously tested",
       "id": "CORE-10",
       "suite": "Core AppReg",
-      "sourceRow": 23,
-      "runResultsRow": 18,
+      "sourceRow": 25,
+      "runResultsRow": 25,
       "runResultsCaseKey": "CORE-10"
     },
     {
@@ -323,8 +358,8 @@ window.UAT_DATA = {
       "history": "Previously tested",
       "id": "CORE-11",
       "suite": "Core AppReg",
-      "sourceRow": 24,
-      "runResultsRow": 19,
+      "sourceRow": 26,
+      "runResultsRow": 26,
       "runResultsCaseKey": "CORE-11"
     },
     {
@@ -340,8 +375,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "CORE-11A",
       "suite": "Core AppReg",
-      "sourceRow": 25,
-      "runResultsRow": 20,
+      "sourceRow": 27,
+      "runResultsRow": 27,
       "runResultsCaseKey": "CORE-11A - Ticket 1803"
     },
     {
@@ -357,8 +392,8 @@ window.UAT_DATA = {
       "history": "Previously tested",
       "id": "CORE-12",
       "suite": "Core AppReg",
-      "sourceRow": 26,
-      "runResultsRow": 21,
+      "sourceRow": 28,
+      "runResultsRow": 28,
       "runResultsCaseKey": "CORE-12"
     },
     {
@@ -374,8 +409,8 @@ window.UAT_DATA = {
       "history": "Previously tested",
       "id": "CORE-13",
       "suite": "Core AppReg",
-      "sourceRow": 27,
-      "runResultsRow": 22,
+      "sourceRow": 29,
+      "runResultsRow": 29,
       "runResultsCaseKey": "CORE-13"
     },
     {
@@ -391,8 +426,8 @@ window.UAT_DATA = {
       "history": "Previously tested",
       "id": "CORE-14",
       "suite": "Core AppReg",
-      "sourceRow": 28,
-      "runResultsRow": 23,
+      "sourceRow": 30,
+      "runResultsRow": 30,
       "runResultsCaseKey": "CORE-14"
     },
     {
@@ -408,8 +443,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "CORE-14A",
       "suite": "Core AppReg",
-      "sourceRow": 29,
-      "runResultsRow": 24,
+      "sourceRow": 31,
+      "runResultsRow": 31,
       "runResultsCaseKey": "CORE-14A - Ticket 1228"
     },
     {
@@ -425,12 +460,12 @@ window.UAT_DATA = {
       "history": "Previously tested",
       "id": "CORE-15",
       "suite": "Core AppReg",
-      "sourceRow": 30,
-      "runResultsRow": 25,
+      "sourceRow": 32,
+      "runResultsRow": 32,
       "runResultsCaseKey": "CORE-15"
     },
     {
-      "caseKey": "CORE-15A \u2013 Ticket 1558",
+      "caseKey": "CORE-15A -Ticket 1558",
       "scope": "Planned",
       "scenarioId": "UAT 13a",
       "title": "Enter Free-text Titles for Officials",
@@ -442,9 +477,9 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "CORE-15A",
       "suite": "Core AppReg",
-      "sourceRow": 31,
-      "runResultsRow": 103,
-      "runResultsCaseKey": "CORE-15A -  Ticket 1558"
+      "sourceRow": 33,
+      "runResultsRow": 33,
+      "runResultsCaseKey": "CORE-15A - Ticket 1558"
     },
     {
       "caseKey": "CORE-16",
@@ -459,8 +494,8 @@ window.UAT_DATA = {
       "history": "Previously tested",
       "id": "CORE-16",
       "suite": "Core AppReg",
-      "sourceRow": 32,
-      "runResultsRow": 26,
+      "sourceRow": 34,
+      "runResultsRow": 34,
       "runResultsCaseKey": "CORE-16"
     },
     {
@@ -476,26 +511,26 @@ window.UAT_DATA = {
       "history": "Previously tested",
       "id": "CORE-17",
       "suite": "Core AppReg",
-      "sourceRow": 33,
-      "runResultsRow": 27,
+      "sourceRow": 35,
+      "runResultsRow": 35,
       "runResultsCaseKey": "CORE-17"
     },
     {
-      "caseKey": "CORE-18",
+      "caseKey": "CORE-18 - Ticket 1936",
       "scope": "Planned",
       "scenarioId": "UAT 15b",
-      "title": "Print One Entry -  Negative Path (Missing Data)",
-      "goal": "Confirm a user receives clear validation when required print data is missing or invalid.",
-      "preconditions": "An Application List Entry with missing mandatory fields, such as a required respondent or fee details, is selected.",
-      "steps": "Given I have selected an Application List Entry with incomplete data\nWhen I select Print\nAnd the system validates the print data",
-      "expected": "Validation error messages are displayed and identify missing fields\nThe print action is prevented\nThe user is guided to complete the missing data before retrying",
+      "title": "Print - Negative Paths (Missing Data and a Selection Containing a Deleted or Moved Entry)",
+      "goal": "Confirm missing or invalid print data prevents printing. Confirm printing a selection containing a deleted or moved entry is prevented with a meaningful message instructing the user to refresh and select the applications again, without displaying internal entry IDs.",
+      "preconditions": "An entry with incomplete print data is available. For ticket 1936, an open list contains at least two applications that can be individually selected for printing. Another list is available as a move destination, and the original list can be opened in a second browser tab.",
+      "steps": "Missing or invalid print data\nGiven I have selected an Application List Entry with incomplete data\nWhen I select Print\nAnd the system validates the print data\n\nSelection containing a moved application (1936)\nGiven I have opened an open list containing at least two applications\nWhen I individually select two applications for printing\nAnd I open the same list in a second browser tab\nAnd I move one selected application to another list in the second tab\nAnd I return to the first tab without refreshing\nAnd I choose Actions > Print page and review the error\n\nSelection containing a deleted application (1936)\nGiven I have made another selection of two applications\nWhen I delete one selected application in the second tab instead of moving it\nAnd I return to the first tab without refreshing\nAnd I choose Actions > Print page and review the error",
+      "expected": "Missing or invalid print data\nValidation messages identify the missing fields. Printing is prevented, and the user is guided to complete the missing data before retrying.\n\nMoved or deleted application (1936)\nPrinting the selection is prevented when a selected application has been moved or deleted.\nA clear, user-facing message explains the problem and tells the user to refresh the list and select the applications again.\nInternal entry identifiers are not displayed in the error message.",
       "sourceComments": null,
       "history": "Previously tested",
       "id": "CORE-18",
       "suite": "Core AppReg",
-      "sourceRow": 34,
-      "runResultsRow": 28,
-      "runResultsCaseKey": "CORE-18"
+      "sourceRow": 36,
+      "runResultsRow": 36,
+      "runResultsCaseKey": "CORE-18 - Ticket 1936"
     },
     {
       "caseKey": "CORE-19",
@@ -510,8 +545,8 @@ window.UAT_DATA = {
       "history": "Previously tested",
       "id": "CORE-19",
       "suite": "Core AppReg",
-      "sourceRow": 35,
-      "runResultsRow": 29,
+      "sourceRow": 37,
+      "runResultsRow": 37,
       "runResultsCaseKey": "CORE-19"
     },
     {
@@ -527,8 +562,8 @@ window.UAT_DATA = {
       "history": "Previously tested",
       "id": "CORE-20",
       "suite": "Core AppReg",
-      "sourceRow": 36,
-      "runResultsRow": 30,
+      "sourceRow": 38,
+      "runResultsRow": 38,
       "runResultsCaseKey": "CORE-20"
     },
     {
@@ -544,8 +579,8 @@ window.UAT_DATA = {
       "history": "Previously tested",
       "id": "CORE-21",
       "suite": "Core AppReg",
-      "sourceRow": 37,
-      "runResultsRow": 31,
+      "sourceRow": 39,
+      "runResultsRow": 39,
       "runResultsCaseKey": "CORE-21"
     },
     {
@@ -553,16 +588,16 @@ window.UAT_DATA = {
       "scope": "Planned",
       "scenarioId": "UAT 17b",
       "title": "Print Select All - Negative Path (Mixed Valid/Invalid)",
-      "goal": "Confirm a user can review and confirm the print details for all selected entries.",
-      "preconditions": "The print preview for multiple entries is open and all data is valid. The selected entries include duration values for the formatting checks, long Application text, Result placeholder text, a \u201cThis matter was before\u201d value, and empty Case Reference, Account Reference and Date of Birth fields.",
-      "steps": "Given I am on the print confirmation screen showing all selected entries\nWhen I review the entry summary\nAnd I confirm all entries display the correct data\nAnd I select Confirm Print\nAnd I review the generated continuation report",
+      "goal": "Confirm the batch print is prevented when the selected entries include both valid entries and entries that fail print validation.",
+      "preconditions": "Multiple Application List Entries are selected, including at least one valid entry and one entry with data known to fail print validation.",
+      "steps": "Given I have selected multiple Application List Entries, including both valid and invalid entries\nWhen I select Print All\nAnd the system validates the selected entries\nAnd I review the validation errors",
       "expected": "Validation prevents the batch print from proceeding\nAn error message lists which entries failed and why\nThe user is prompted to fix incomplete entries\nA link or action allows the user to view and edit the problematic entries\nPrint can be retried once the issues are corrected",
       "sourceComments": null,
       "history": "Previously tested",
       "id": "CORE-22",
       "suite": "Core AppReg",
-      "sourceRow": 38,
-      "runResultsRow": 32,
+      "sourceRow": 40,
+      "runResultsRow": 40,
       "runResultsCaseKey": "CORE-22"
     },
     {
@@ -571,15 +606,15 @@ window.UAT_DATA = {
       "scenarioId": "UAT 18a",
       "title": "Print Continuation Select All - Positive Path",
       "goal": "Confirm a user can review and confirm the print details for all selected entries.",
-      "preconditions": "Confirm a user can review and confirm the print details for all selected entries.",
+      "preconditions": "The print confirmation screen is open for multiple selected entries, and all entries have passed validation.",
       "steps": "Given I am on the print confirmation screen showing all selected entries\nWhen I review the entry summary\nAnd confirm all entries display the correct data\nAnd I select Confirm Print\nAnd I review the generated continuation report",
       "expected": "All entries print successfully\nA completion message confirms the number of entries printed\nReturning to the Application List clears selections and displays the fresh list",
       "sourceComments": null,
       "history": "Previously tested",
       "id": "CORE-23",
       "suite": "Core AppReg",
-      "sourceRow": 39,
-      "runResultsRow": 33,
+      "sourceRow": 41,
+      "runResultsRow": 41,
       "runResultsCaseKey": "CORE-23"
     },
     {
@@ -595,8 +630,8 @@ window.UAT_DATA = {
       "history": "Previously tested",
       "id": "CORE-24",
       "suite": "Core AppReg",
-      "sourceRow": 40,
-      "runResultsRow": 34,
+      "sourceRow": 42,
+      "runResultsRow": 42,
       "runResultsCaseKey": "CORE-24"
     },
     {
@@ -612,8 +647,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "CORE-23C",
       "suite": "Core AppReg",
-      "sourceRow": 41,
-      "runResultsRow": 35,
+      "sourceRow": 43,
+      "runResultsRow": 43,
       "runResultsCaseKey": "CORE-23C - Ticket 707"
     },
     {
@@ -629,8 +664,8 @@ window.UAT_DATA = {
       "history": "Previously tested",
       "id": "CORE-25",
       "suite": "Core AppReg",
-      "sourceRow": 42,
-      "runResultsRow": 36,
+      "sourceRow": 44,
+      "runResultsRow": 44,
       "runResultsCaseKey": "CORE-25"
     },
     {
@@ -646,46 +681,46 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "CORE-25B",
       "suite": "Core AppReg",
-      "sourceRow": 43,
-      "runResultsRow": 37,
+      "sourceRow": 45,
+      "runResultsRow": 45,
       "runResultsCaseKey": "CORE-25B - Ticket 1046"
     },
     {
-      "caseKey": "CORE-25C \u2013 Ticket 1688",
+      "caseKey": "CORE-25C - Ticket 1688",
       "scope": "Planned",
       "scenarioId": "UAT 19c",
       "title": "Delete an Application List",
       "goal": "Confirm a user can delete an eligible Application List after confirming, and receives confirmation that it was deleted.",
       "preconditions": "The user can access the Details page of an Application List that can be deleted.",
-      "steps": "\tGiven I am viewing a deletable Application List\nWhen I select Delete list\nAnd I confirm deletion",
+      "steps": "Given I am viewing a deletable Application List\nWhen I select Delete list\nAnd I confirm deletion",
       "expected": "Delete list is available and asks me to confirm. The currently viewed list is deleted. I return to the Applications list page and see a success message confirming deletion.",
       "sourceComments": null,
       "history": "New for this UAT",
       "id": "CORE-25C",
       "suite": "Core AppReg",
-      "sourceRow": 44,
-      "runResultsRow": 104,
+      "sourceRow": 46,
+      "runResultsRow": 46,
       "runResultsCaseKey": "CORE-25C - Ticket 1688"
     },
     {
-      "caseKey": "CORE-25D \u2013 Ticket 1688",
+      "caseKey": "CORE-25D - Ticket 1688",
       "scope": "Planned",
       "scenarioId": "UAT 19d",
       "title": "Cancel Application List Deletion",
       "goal": "Confirm a user can cancel deletion and return to the Application List Details page without changing the list.",
       "preconditions": "The user is on the delete confirmation page for an existing Application List.",
-      "steps": "\tGiven I am on the delete confirmation page\nWhen I choose not to continue",
+      "steps": "Given I am on the delete confirmation page\nWhen I choose not to continue",
       "expected": "The list is not deleted, and I return to its Details page.",
       "sourceComments": null,
       "history": "New for this UAT",
       "id": "CORE-25D",
       "suite": "Core AppReg",
-      "sourceRow": 45,
-      "runResultsRow": 105,
+      "sourceRow": 47,
+      "runResultsRow": 47,
       "runResultsCaseKey": "CORE-25D - Ticket 1688"
     },
     {
-      "caseKey": "CORE-25E \u2013 Ticket 1688",
+      "caseKey": "CORE-25E - Ticket 1688",
       "scope": "Planned",
       "scenarioId": "UAT 19e",
       "title": "Handle Application List Deletion Failure",
@@ -697,9 +732,9 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "CORE-25E",
       "suite": "Core AppReg",
-      "sourceRow": 46,
-      "runResultsRow": 106,
-      "runResultsCaseKey": "CORE-25E -  Ticket 1688"
+      "sourceRow": 48,
+      "runResultsRow": 48,
+      "runResultsCaseKey": "CORE-25E - Ticket 1688"
     },
     {
       "caseKey": "CORE-25F \u2013 Ticket 1688",
@@ -714,14 +749,14 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "CORE-25F",
       "suite": "Core AppReg",
-      "sourceRow": 47,
-      "runResultsRow": 107,
+      "sourceRow": 49,
+      "runResultsRow": 49,
       "runResultsCaseKey": "CORE-25F - Ticket 1688"
     },
     {
-      "caseKey": "CORE-25G \u2013 Ticket 1717",
+      "caseKey": "CORE-25G - Ticket 1717",
       "scope": "Planned",
-      "scenarioId": "\tUAT 19g",
+      "scenarioId": "UAT 19g",
       "title": "Prevent Deletion of a Closed Application List",
       "goal": "Confirm a CLOSED Application List cannot be deleted and remains unchanged.",
       "preconditions": "A CLOSED Application List is available to test, and the user can access its Details page.",
@@ -731,9 +766,9 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "CORE-25G",
       "suite": "Core AppReg",
-      "sourceRow": 48,
-      "runResultsRow": 108,
-      "runResultsCaseKey": "CORE-25G -  Ticket 1717"
+      "sourceRow": 50,
+      "runResultsRow": 50,
+      "runResultsCaseKey": "CORE-25G - Ticket 1717"
     },
     {
       "caseKey": "CORE-26",
@@ -748,8 +783,8 @@ window.UAT_DATA = {
       "history": "Previously tested",
       "id": "CORE-26",
       "suite": "Core AppReg",
-      "sourceRow": 49,
-      "runResultsRow": 38,
+      "sourceRow": 51,
+      "runResultsRow": 51,
       "runResultsCaseKey": "CORE-26"
     },
     {
@@ -765,8 +800,8 @@ window.UAT_DATA = {
       "history": "Previously tested",
       "id": "CORE-27",
       "suite": "Core AppReg",
-      "sourceRow": 50,
-      "runResultsRow": 39,
+      "sourceRow": 52,
+      "runResultsRow": 52,
       "runResultsCaseKey": "CORE-27"
     },
     {
@@ -775,15 +810,15 @@ window.UAT_DATA = {
       "scenarioId": "UAT 22",
       "title": "Result Selected with Select All",
       "goal": "Confirm Select All represents every matching application across the Application List pages, and Result Selected handles already-resulted and un-resulted applications correctly.",
-      "preconditions": "Application List entries span more than one page. Test data is available for mixed, all-resulted and all-un-resulted selections.",
-      "steps": "Mixed selection - Given the Application List entries span multiple pages and include both already-resulted and un-resulted applications\nWhen I select all matching applications across the Application List pages\nAnd I choose Result Selected from Actions\nAnd I save the result changes\n\nAll already resulted - Given I have selected only applications that already have results\nWhen I choose Result Selected from Actions\n\nAll un-resulted - Given I have selected only applications without results\nWhen I choose Result Selected from Actions\nAnd I save the result changes",
+      "preconditions": "Application List results span more than one page. Test data is available containing:\n\na mix of resulted and un-resulted applications\nonly resulted applications\nonly un-resulted applications",
+      "steps": "Given the Application List entries span multiple pages and include both already-resulted and un-resulted applications\n When I select Select All to select all matching applications across all Application List pages\n And I choose Result Selected from Actions\n And I save the result changes\n\nAll already resulted - Given I have selected only applications that already have results\nWhen I choose Result Selected from Actions\n\nAll un-resulted - Given I have selected only applications without results\nWhen I choose Result Selected from Actions\nAnd I save the result changes",
       "expected": "Mixed selection: An amber warning explains that already-resulted applications have been excluded. The Result Applications table contains only un-resulted applications. After I save the result changes, only those un-resulted applications receive a result. Already-resulted applications are not processed again.\n\nAll already resulted: I am prevented from continuing and see a clear warning. No result changes are applied.\n\nAll un-resulted: No warning appears and the journey continues normally. After I save the result changes, the selected applications receive their results.",
       "sourceComments": null,
       "history": "Previously tested",
       "id": "CORE-28",
       "suite": "Core AppReg",
-      "sourceRow": 51,
-      "runResultsRow": 40,
+      "sourceRow": 53,
+      "runResultsRow": 53,
       "runResultsCaseKey": "CORE-28 - Ticket 1360"
     },
     {
@@ -792,15 +827,15 @@ window.UAT_DATA = {
       "scenarioId": "STD APP 1",
       "title": "Open Standard Applicants Page",
       "goal": "Summary: Confirm an authorised user can access the Standard Applicants page and view the search controls",
-      "preconditions": "User is logged in with permission to view Standard Applicants",
-      "steps": "Given I am logged in as a user with Standard Applicant access\nWhen I open the Standard Applicants page\nAnd I view the Records search area",
-      "expected": "The Standard Applicants page is displayed\nI can search by Code\nI can search by Standard Applicant Name\nNo results table is displayed until a search has been completed\nExport and Print are unavailable until results are returned",
+      "preconditions": "User is logged into the Application Register.",
+      "steps": "Given I am logged into the Application Register\n When I open the Standard Applicants page\n And I view the Records search area",
+      "expected": "The Standard Applicants page is displayed\n I can search by Code\n I can search by Standard Applicant Name\n No results table is displayed until a search has been completed\n Export and Print are unavailable until results are return",
       "sourceComments": null,
       "history": "New for this UAT",
       "id": "SA-01",
       "suite": "Standard Applicants",
-      "sourceRow": 52,
-      "runResultsRow": 41,
+      "sourceRow": 54,
+      "runResultsRow": 54,
       "runResultsCaseKey": "SA-01"
     },
     {
@@ -816,8 +851,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "SA-02",
       "suite": "Standard Applicants",
-      "sourceRow": 53,
-      "runResultsRow": 42,
+      "sourceRow": 55,
+      "runResultsRow": 55,
       "runResultsCaseKey": "SA-02"
     },
     {
@@ -833,8 +868,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "SA-03",
       "suite": "Standard Applicants",
-      "sourceRow": 54,
-      "runResultsRow": 43,
+      "sourceRow": 56,
+      "runResultsRow": 56,
       "runResultsCaseKey": "SA-03"
     },
     {
@@ -842,16 +877,16 @@ window.UAT_DATA = {
       "scope": "Planned",
       "scenarioId": "STD APP 4",
       "title": "Search Standard Applicants by Person Name",
-      "goal": "Summary: Confirm a user can find person Standard Applicants using surname or any forename through the single name search field\n\nBusiness goal: As a court user, I need one name search field to find person Standard Applicants reliably without knowing which name field holds the matching value",
-      "preconditions": "Active person Standard Applicant records exist with surname, forename 1, forename 2 or forename 3 populated",
-      "steps": "Given I am on the Standard Applicants page\nWhen I enter a full or partial person name in Standard Applicant Name\nAnd the text matches surname, forename 1, forename 2 or forename 3\nAnd I select Search",
-      "expected": "Matching active person Standard Applicants are displayed\nThe name search is case-insensitive\nThe search checks surname, forename 1, forename 2 and forename 3\nThe result preserves title, forenames and surname for display\nOrganisation records are not incorrectly created from person name fields",
+      "goal": "Summary: Confirm a user can find Person Standard Applicants using a surname or any forename through the Standard Applicant Name search field.\n\nBusiness Goal\n As a court user, I need one name search field to find Person Standard Applicants reliably without knowing which name field contains the matching value.",
+      "preconditions": "Active Person Standard Applicant records exist with values populated in surname, forename 1, forename 2 and/or forename 3.",
+      "steps": "Given I am on the Standard Applicants page\n When I enter a full or partial name into the Standard Applicant Name field\n And the entered value matches a surname, forename 1, forename 2 or forename 3 for an active Person Standard Applicant\n And I select Search",
+      "expected": "Matching active Person Standard Applicant records are returned\n The search is case-insensitive\n The search matches against surname, forename 1, forename 2 and forename 3 fields\n Person Standard Applicants are returned regardless of which name field contains the match\n Organisation Standard Applicants are not returned when the search term matches only Person Standard Applicant name fields",
       "sourceComments": null,
       "history": "New for this UAT",
       "id": "SA-04",
       "suite": "Standard Applicants",
-      "sourceRow": 55,
-      "runResultsRow": 44,
+      "sourceRow": 57,
+      "runResultsRow": 57,
       "runResultsCaseKey": "SA-04"
     },
     {
@@ -867,8 +902,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "SA-05",
       "suite": "Standard Applicants",
-      "sourceRow": 56,
-      "runResultsRow": 45,
+      "sourceRow": 58,
+      "runResultsRow": 58,
       "runResultsCaseKey": "SA-05"
     },
     {
@@ -884,8 +919,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "SA-06",
       "suite": "Standard Applicants",
-      "sourceRow": 57,
-      "runResultsRow": 46,
+      "sourceRow": 59,
+      "runResultsRow": 59,
       "runResultsCaseKey": "SA-06"
     },
     {
@@ -901,8 +936,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "SA-07",
       "suite": "Standard Applicants",
-      "sourceRow": 58,
-      "runResultsRow": 47,
+      "sourceRow": 60,
+      "runResultsRow": 60,
       "runResultsCaseKey": "SA-07"
     },
     {
@@ -913,13 +948,13 @@ window.UAT_DATA = {
       "goal": "Summary: Confirm Standard Applicant search results show the expected key fields\n\nBusiness goal: As a court user, I need search results to show enough information to identify the correct Standard Applicant before opening, exporting, printing or selecting it",
       "preconditions": "A Standard Applicant search has returned one or more active records",
       "steps": "Given I have searched for Standard Applicants\nWhen The results table is displayed\nAnd I review the displayed rows",
-      "expected": "Each result shows Code\nEach result shows Name\nEach result shows Address Line 1 or the agreed address summary\nEach result shows Use From\nEach result shows Use To where populated\nPerson and organisation applicants are both displayed using the agreed display name rules\nInternal id and version fields are not shown in the user-facing table",
+      "expected": "Each result shows Code\nEach result shows Name\nEach result shows Use From\nEach result shows Use To where populated\nPerson and organisation applicants are both displayed using the agreed display name rules\nInternal id and version fields are not shown in the user-facing table",
       "sourceComments": null,
       "history": "New for this UAT",
       "id": "SA-08",
       "suite": "Standard Applicants",
-      "sourceRow": 59,
-      "runResultsRow": 48,
+      "sourceRow": 61,
+      "runResultsRow": 61,
       "runResultsCaseKey": "SA-08"
     },
     {
@@ -929,14 +964,14 @@ window.UAT_DATA = {
       "title": "Sort Standard Applicant Results",
       "goal": "Summary: Confirm Standard Applicant results can be sorted by supported columns\n\nBusiness goal: As a court user, I need to sort Standard Applicant results so that I can scan and compare records efficiently",
       "preconditions": "A Standard Applicant search has returned multiple results",
-      "steps": "Given I am viewing Standard Applicant search results\nWhen I sort by a supported column such as Code, Name, Address, Use From or Use To\nAnd I change the sort direction",
+      "steps": "Given I am viewing Standard Applicant search results\nWhen I sort by a supported column such as Code, Name, Use From or Use To\nAnd I change the sort direction",
       "expected": "The results are redisplayed in the selected sort order\nSorting is applied after the active search filters\nThe selected sort field and direction are retained while I page through results\nUnsupported sort options are not available to the user",
       "sourceComments": null,
       "history": "New for this UAT",
       "id": "SA-09",
       "suite": "Standard Applicants",
-      "sourceRow": 60,
-      "runResultsRow": 49,
+      "sourceRow": 62,
+      "runResultsRow": 62,
       "runResultsCaseKey": "SA-09"
     },
     {
@@ -952,8 +987,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "SA-10",
       "suite": "Standard Applicants",
-      "sourceRow": 61,
-      "runResultsRow": 50,
+      "sourceRow": 63,
+      "runResultsRow": 63,
       "runResultsCaseKey": "SA-10"
     },
     {
@@ -961,153 +996,17 @@ window.UAT_DATA = {
       "scope": "Planned",
       "scenarioId": "STD APP 11",
       "title": "Open Standard Applicant Details",
-      "goal": "Summary: Confirm a user can open a Standard Applicant record and view the full details needed for operational use\n\nBusiness goal: As a court user, I need to view the full Standard Applicant details so that I can confirm the correct record and inspect address and contact information",
+      "goal": "Summary: Confirm a user can open a Standard Applicant record and view the details available within Application Register.\n\nBusiness Goal\n As a court user, I need to open a Standard Applicant record so that I can confirm I have selected the correct applicant",
       "preconditions": "A Standard Applicant search result is displayed",
-      "steps": "Given I am viewing Standard Applicant search results\nWhen I open a Standard Applicant record\nAnd The applicant code is active for the relevant date",
-      "expected": "The Standard Applicant detail view is displayed\nThe applicant code is shown\nOrganisation records show organisation name and address/contact details\nPerson records show title, forenames, surname and address/contact details\nUse From and Use To dates are shown where available\nInternal id and version fields are not shown unless explicitly agreed for support users",
+      "steps": "Given I am viewing Standard Applicant search results\n When I select a Standard Applicant record\n And the applicant code is active for the relevant date",
+      "expected": "The Standard Applicant details page is displayed\n The Applicant Code is displayed\n The Name is displayed\n The Use From date is displayed\n The Use To date is displayed where populated\n The displayed information matches the selected Standard Applicant record",
       "sourceComments": null,
       "history": "New for this UAT",
       "id": "SA-11",
       "suite": "Standard Applicants",
-      "sourceRow": 62,
-      "runResultsRow": 51,
-      "runResultsCaseKey": "SA-11"
-    },
-    {
-      "caseKey": "SA-12",
-      "scope": "Planned",
-      "scenarioId": "STD APP 12a",
-      "title": "Create Organisation Standard Applicant",
-      "goal": "Summary: Confirm an authorised user can create a new organisation Standard Applicant\n\nBusiness goal: As an authorised AppReg user, I need to create organisation Standard Applicants so that reusable applicant records can be managed within AppReg",
-      "preconditions": "User has permission to maintain Standard Applicants and the applicant code does not already exist as an active duplicate",
-      "steps": "Given I am authorised to maintain Standard Applicants\nWhen I create a new organisation Standard Applicant\nAnd I enter applicant code\nAnd I enter organisation name\nAnd I enter mandatory address and effective date details\nAnd I save the record",
-      "expected": "The Standard Applicant is saved successfully\nThe record is stored as AppReg-managed operational data\nThe record can be found through Standard Applicant search once active\nAudit or version information records the creation\nA success message is displayed",
-      "sourceComments": null,
-      "history": "New for this UAT",
-      "id": "SA-12",
-      "suite": "Standard Applicants",
-      "sourceRow": 63,
-      "runResultsRow": 52,
-      "runResultsCaseKey": "SA-12"
-    },
-    {
-      "caseKey": "SA-13",
-      "scope": "Planned",
-      "scenarioId": "STD APP 12b",
-      "title": "Create Person Standard Applicant",
-      "goal": "Summary: Confirm an authorised user can create a new person Standard Applicant\n\nBusiness goal: As an authorised AppReg user, I need to create person Standard Applicants so that frequently used individual applicants can be reused in application workflows",
-      "preconditions": "User has permission to maintain Standard Applicants and the applicant code does not already exist as an active duplicate",
-      "steps": "Given I am authorised to maintain Standard Applicants\nWhen I create a new person Standard Applicant\nAnd I enter applicant code\nAnd I enter mandatory personal name fields such as surname and any required forename details\nAnd I enter mandatory address and effective date details\nAnd I save the record",
-      "expected": "The Standard Applicant is saved successfully\nThe record is stored as a person Standard Applicant\nThe title, forenames and surname are preserved\nThe record can be found through Standard Applicant search once active\nAudit or version information records the creation\nA success message is displayed",
-      "sourceComments": null,
-      "history": "New for this UAT",
-      "id": "SA-13",
-      "suite": "Standard Applicants",
       "sourceRow": 64,
-      "runResultsRow": 53,
-      "runResultsCaseKey": "SA-13"
-    },
-    {
-      "caseKey": "SA-14",
-      "scope": "Planned",
-      "scenarioId": "STD APP 13",
-      "title": "Validate Standard Applicant Maintenance",
-      "goal": "Summary: Confirm create or update validation protects Standard Applicant data quality\n\nBusiness goal: As a court user, I need invalid Standard Applicant details to be rejected so that reusable applicant records remain accurate",
-      "preconditions": "User is creating or updating a Standard Applicant",
-      "steps": "Given I am creating or updating a Standard Applicant\nWhen I leave mandatory fields blank or enter malformed details\nAnd I save the record",
-      "expected": "The Standard Applicant is not saved\nValidation messages identify the fields requiring correction\nThe existing Standard Applicant record is not corrupted\nI can correct the fields and save again",
-      "sourceComments": null,
-      "history": "New for this UAT",
-      "id": "SA-14",
-      "suite": "Standard Applicants",
-      "sourceRow": 65,
-      "runResultsRow": 54,
-      "runResultsCaseKey": "SA-14"
-    },
-    {
-      "caseKey": "SA-15",
-      "scope": "Planned",
-      "scenarioId": "STD APP 14",
-      "title": "Update Standard Applicant Details",
-      "goal": "Summary: Confirm an authorised user can update an existing Standard Applicant without breaking search or application references\n\nBusiness goal: As an authorised AppReg user, I need to update Standard Applicant details so that reusable applicant records remain current while historical application links remain understandable",
-      "preconditions": "An existing Standard Applicant record exists and the user has maintenance permission",
-      "steps": "Given I am authorised to maintain Standard Applicants\nWhen I update an existing Standard Applicant\nAnd I amend name, address, contact or effective date details\nAnd I save the record",
-      "expected": "The Standard Applicant is updated successfully\nThe updated details are visible when the record is reopened\nSearch results reflect the updated searchable values\nExisting Application List Entries that referenced the Standard Applicant remain valid\nAudit or version information records the update\nA success message is displayed",
-      "sourceComments": null,
-      "history": "New for this UAT",
-      "id": "SA-15",
-      "suite": "Standard Applicants",
-      "sourceRow": 66,
-      "runResultsRow": 55,
-      "runResultsCaseKey": "SA-15"
-    },
-    {
-      "caseKey": "SA-16",
-      "scope": "Planned",
-      "scenarioId": "STD APP 15",
-      "title": "Deactivate or End-Date Standard Applicant",
-      "goal": "Summary: Confirm an authorised user can make a Standard Applicant inactive without physically removing historical references\n\nBusiness goal: As an authorised AppReg user, I need to deactivate Standard Applicants that should no longer be used so that users cannot select obsolete records for new work",
-      "preconditions": "An active Standard Applicant exists and the user has permission to deactivate or end-date records",
-      "steps": "Given I am authorised to maintain Standard Applicants\nWhen I set the Standard Applicant Use To date to a past date or perform the agreed deactivate action\nAnd I save the change",
-      "expected": "The Standard Applicant is made inactive\nThe inactive record is excluded from default active searches\nThe inactive record cannot be selected for new Application List Entries by default\nHistorical Application List Entries remain readable\nAudit or version information records the deactivation",
-      "sourceComments": null,
-      "history": "New for this UAT",
-      "id": "SA-16",
-      "suite": "Standard Applicants",
-      "sourceRow": 67,
-      "runResultsRow": 56,
-      "runResultsCaseKey": "SA-16"
-    },
-    {
-      "caseKey": "SA-17",
-      "scope": "Planned",
-      "scenarioId": "STD APP 16",
-      "title": "Reject Unauthorised Standard Applicant Maintenance",
-      "goal": "Summary: Confirm users without maintenance permission cannot create, update, deactivate or delete Standard Applicants\n\nBusiness goal: As a service owner, I need Standard Applicant maintenance to be permission-controlled so that operational master data is protected",
-      "preconditions": "User is authenticated but does not have Standard Applicant maintenance permission",
-      "steps": "Given I do not have permission to maintain Standard Applicants\nWhen I attempt to create, update, deactivate or delete a Standard Applicant\nAnd The system checks my role or permission",
-      "expected": "The action is prevented\nA standard authorisation error is displayed or returned\nNo Standard Applicant data is changed\nRead-only search access is retained only where my role allows it",
-      "sourceComments": null,
-      "history": "New for this UAT",
-      "id": "SA-17",
-      "suite": "Standard Applicants",
-      "sourceRow": 68,
-      "runResultsRow": 57,
-      "runResultsCaseKey": "SA-17"
-    },
-    {
-      "caseKey": "SA-18",
-      "scope": "Planned",
-      "scenarioId": "STD APP 17a",
-      "title": "Select Standard Applicant for Application List Entry",
-      "goal": "Summary: Confirm a user can select an active Standard Applicant when creating or updating an Application List Entry\n\nBusiness goal: As a court user, I need to select a Standard Applicant in an application entry so that common applicant details can be reused without re-keying",
-      "preconditions": "An active Standard Applicant exists and an Application List Entry is being created or updated",
-      "steps": "Given I am creating or updating an Application List Entry\nWhen I choose Standard Applicant as the applicant type\nAnd I search for and select an active Standard Applicant\nAnd I complete the remaining mandatory application details\nAnd I save the application",
-      "expected": "The Application List Entry is saved successfully\nThe selected Standard Applicant code is linked to the entry\nThe selected Standard Applicant name appears in the application summary\nPerson or Organisation applicant fields are not submitted at the same time\nThe Standard Applicant can be used in print and summary views for the entry",
-      "sourceComments": null,
-      "history": "New for this UAT",
-      "id": "SA-18",
-      "suite": "Standard Applicants",
-      "sourceRow": 69,
-      "runResultsRow": 58,
-      "runResultsCaseKey": "SA-18"
-    },
-    {
-      "caseKey": "SA-19",
-      "scope": "Planned",
-      "scenarioId": "STD APP 17b",
-      "title": "Reject Unknown or Inactive Standard Applicant on Application Entry",
-      "goal": "Summary: Confirm an Application List Entry cannot be saved with an unknown or inactive Standard Applicant\n\nBusiness goal: As a court user, I need invalid Standard Applicant references to be rejected so that application entries are not linked to unusable applicant records",
-      "preconditions": "User is creating or updating an Application List Entry with applicant type set to Standard Applicant",
-      "steps": "Given I am creating or updating an Application List Entry\nWhen I supply an unknown, expired or inactive Standard Applicant code\nAnd I attempt to save the application",
-      "expected": "The application is not saved with the invalid Standard Applicant reference\nA validation message identifies the Standard Applicant problem\nI can select an active Standard Applicant and retry\nNo person or organisation applicant details are silently substituted",
-      "sourceComments": null,
-      "history": "New for this UAT",
-      "id": "SA-19",
-      "suite": "Standard Applicants",
-      "sourceRow": 70,
-      "runResultsRow": 59,
-      "runResultsCaseKey": "SA-19"
+      "runResultsRow": 64,
+      "runResultsCaseKey": "SA-11"
     },
     {
       "caseKey": "SA-20",
@@ -1122,8 +1021,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "SA-20",
       "suite": "Standard Applicants",
-      "sourceRow": 71,
-      "runResultsRow": 60,
+      "sourceRow": 65,
+      "runResultsRow": 65,
       "runResultsCaseKey": "SA-20"
     },
     {
@@ -1139,8 +1038,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "SA-21",
       "suite": "Standard Applicants",
-      "sourceRow": 72,
-      "runResultsRow": 61,
+      "sourceRow": 66,
+      "runResultsRow": 66,
       "runResultsCaseKey": "SA-21"
     },
     {
@@ -1156,8 +1055,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "SA-22",
       "suite": "Standard Applicants",
-      "sourceRow": 73,
-      "runResultsRow": 62,
+      "sourceRow": 67,
+      "runResultsRow": 67,
       "runResultsCaseKey": "SA-22"
     },
     {
@@ -1173,8 +1072,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "SA-23",
       "suite": "Standard Applicants",
-      "sourceRow": 74,
-      "runResultsRow": 63,
+      "sourceRow": 68,
+      "runResultsRow": 68,
       "runResultsCaseKey": "SA-23"
     },
     {
@@ -1190,12 +1089,12 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "SA-24",
       "suite": "Standard Applicants",
-      "sourceRow": 75,
-      "runResultsRow": 64,
+      "sourceRow": 69,
+      "runResultsRow": 69,
       "runResultsCaseKey": "SA-24"
     },
     {
-      "caseKey": "SA-25 \u2013 Ticket 1049",
+      "caseKey": "SA-25 - Ticket 1049",
       "scope": "Planned",
       "scenarioId": "STD APP 23",
       "title": "Search Applications Using a Standard Applicant Code",
@@ -1207,12 +1106,12 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "SA-25",
       "suite": "Standard Applicants",
-      "sourceRow": 76,
-      "runResultsRow": 109,
-      "runResultsCaseKey": "SA-25 -  Ticket 1049"
+      "sourceRow": 70,
+      "runResultsRow": 70,
+      "runResultsCaseKey": "SA-25 - Ticket 1049"
     },
     {
-      "caseKey": "SA-26 \u2013 Ticket 1049",
+      "caseKey": "SA-26 - Ticket 1049",
       "scope": "Planned",
       "scenarioId": "STD APP 23a",
       "title": "Show \u201cNo results found\u201d for an unmatched Applicant code",
@@ -1224,8 +1123,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "SA-26",
       "suite": "Standard Applicants",
-      "sourceRow": 77,
-      "runResultsRow": 110,
+      "sourceRow": 71,
+      "runResultsRow": 71,
       "runResultsCaseKey": "SA-26 - Ticket 1049"
     },
     {
@@ -1241,8 +1140,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "RP-01",
       "suite": "Reporting",
-      "sourceRow": 78,
-      "runResultsRow": 65,
+      "sourceRow": 72,
+      "runResultsRow": 72,
       "runResultsCaseKey": "RP-01"
     },
     {
@@ -1258,8 +1157,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "RP-02",
       "suite": "Reporting",
-      "sourceRow": 79,
-      "runResultsRow": 66,
+      "sourceRow": 73,
+      "runResultsRow": 73,
       "runResultsCaseKey": "RP-02"
     },
     {
@@ -1275,8 +1174,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "RP-03",
       "suite": "Reporting",
-      "sourceRow": 80,
-      "runResultsRow": 67,
+      "sourceRow": 74,
+      "runResultsRow": 74,
       "runResultsCaseKey": "RP-03"
     },
     {
@@ -1292,8 +1191,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "RP-04",
       "suite": "Reporting",
-      "sourceRow": 81,
-      "runResultsRow": 68,
+      "sourceRow": 75,
+      "runResultsRow": 75,
       "runResultsCaseKey": "RP-04"
     },
     {
@@ -1309,8 +1208,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "RP-05",
       "suite": "Reporting",
-      "sourceRow": 82,
-      "runResultsRow": 69,
+      "sourceRow": 76,
+      "runResultsRow": 76,
       "runResultsCaseKey": "RP-05"
     },
     {
@@ -1326,8 +1225,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "RP-06",
       "suite": "Reporting",
-      "sourceRow": 83,
-      "runResultsRow": 70,
+      "sourceRow": 77,
+      "runResultsRow": 77,
       "runResultsCaseKey": "RP-06"
     },
     {
@@ -1343,8 +1242,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "RP-07",
       "suite": "Reporting",
-      "sourceRow": 84,
-      "runResultsRow": 71,
+      "sourceRow": 78,
+      "runResultsRow": 78,
       "runResultsCaseKey": "RP-07"
     },
     {
@@ -1360,8 +1259,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "RP-08",
       "suite": "Reporting",
-      "sourceRow": 85,
-      "runResultsRow": 72,
+      "sourceRow": 79,
+      "runResultsRow": 79,
       "runResultsCaseKey": "RP-08"
     },
     {
@@ -1377,8 +1276,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "RP-09",
       "suite": "Reporting",
-      "sourceRow": 86,
-      "runResultsRow": 73,
+      "sourceRow": 80,
+      "runResultsRow": 80,
       "runResultsCaseKey": "RP-09"
     },
     {
@@ -1394,8 +1293,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "RP-10",
       "suite": "Reporting",
-      "sourceRow": 87,
-      "runResultsRow": 74,
+      "sourceRow": 81,
+      "runResultsRow": 81,
       "runResultsCaseKey": "RP-10"
     },
     {
@@ -1411,8 +1310,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "RP-11",
       "suite": "Reporting",
-      "sourceRow": 88,
-      "runResultsRow": 75,
+      "sourceRow": 82,
+      "runResultsRow": 82,
       "runResultsCaseKey": "RP-11"
     },
     {
@@ -1428,8 +1327,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "RP-12",
       "suite": "Reporting",
-      "sourceRow": 89,
-      "runResultsRow": 76,
+      "sourceRow": 83,
+      "runResultsRow": 83,
       "runResultsCaseKey": "RP-12"
     },
     {
@@ -1445,8 +1344,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "RP-13",
       "suite": "Reporting",
-      "sourceRow": 90,
-      "runResultsRow": 77,
+      "sourceRow": 84,
+      "runResultsRow": 84,
       "runResultsCaseKey": "RP-13"
     },
     {
@@ -1462,8 +1361,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "RP-14",
       "suite": "Reporting",
-      "sourceRow": 91,
-      "runResultsRow": 78,
+      "sourceRow": 85,
+      "runResultsRow": 85,
       "runResultsCaseKey": "RP-14"
     },
     {
@@ -1479,8 +1378,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "RP-15",
       "suite": "Reporting",
-      "sourceRow": 92,
-      "runResultsRow": 79,
+      "sourceRow": 86,
+      "runResultsRow": 86,
       "runResultsCaseKey": "RP-15"
     },
     {
@@ -1496,14 +1395,14 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "RP-16",
       "suite": "Reporting",
-      "sourceRow": 93,
-      "runResultsRow": 80,
+      "sourceRow": 87,
+      "runResultsRow": 87,
       "runResultsCaseKey": "RP-16"
     },
     {
-      "caseKey": "RP-17 \u2013 Ticket 1850",
+      "caseKey": "RP-17 - Ticket 1850",
       "scope": "Planned",
-      "scenarioId": "\tREPORT UAT 15",
+      "scenarioId": "REPORT UAT 15",
       "title": "Re-download a Recently Generated Report",
       "goal": "Confirm a user can retrieve a recently completed report after returning to Reports without generating it again.",
       "preconditions": "The user is authenticated and authorised to access Reports. A recently completed report is available to their user/session.",
@@ -1513,9 +1412,9 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "RP-17",
       "suite": "Reporting",
-      "sourceRow": 94,
-      "runResultsRow": 111,
-      "runResultsCaseKey": "RP-17 -  Ticket 1850"
+      "sourceRow": 88,
+      "runResultsRow": 88,
+      "runResultsCaseKey": "RP-17 -Ticket 1850"
     },
     {
       "caseKey": "BU-01",
@@ -1530,8 +1429,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "BU-01",
       "suite": "Bulk",
-      "sourceRow": 95,
-      "runResultsRow": 81,
+      "sourceRow": 89,
+      "runResultsRow": 89,
       "runResultsCaseKey": "BU-01"
     },
     {
@@ -1547,8 +1446,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "BU-02",
       "suite": "Bulk",
-      "sourceRow": 96,
-      "runResultsRow": 82,
+      "sourceRow": 90,
+      "runResultsRow": 90,
       "runResultsCaseKey": "BU-02"
     },
     {
@@ -1564,8 +1463,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "BU-03",
       "suite": "Bulk",
-      "sourceRow": 97,
-      "runResultsRow": 83,
+      "sourceRow": 91,
+      "runResultsRow": 91,
       "runResultsCaseKey": "BU-03"
     },
     {
@@ -1581,8 +1480,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "BU-04",
       "suite": "Bulk",
-      "sourceRow": 98,
-      "runResultsRow": 84,
+      "sourceRow": 92,
+      "runResultsRow": 92,
       "runResultsCaseKey": "BU-04"
     },
     {
@@ -1598,8 +1497,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "BU-05",
       "suite": "Bulk",
-      "sourceRow": 99,
-      "runResultsRow": 85,
+      "sourceRow": 93,
+      "runResultsRow": 93,
       "runResultsCaseKey": "BU-05"
     },
     {
@@ -1615,8 +1514,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "BU-06",
       "suite": "Bulk",
-      "sourceRow": 100,
-      "runResultsRow": 86,
+      "sourceRow": 94,
+      "runResultsRow": 94,
       "runResultsCaseKey": "BU-06"
     },
     {
@@ -1632,8 +1531,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "BU-07",
       "suite": "Bulk",
-      "sourceRow": 101,
-      "runResultsRow": 87,
+      "sourceRow": 95,
+      "runResultsRow": 95,
       "runResultsCaseKey": "BU-07"
     },
     {
@@ -1649,8 +1548,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "BU-08",
       "suite": "Bulk",
-      "sourceRow": 102,
-      "runResultsRow": 88,
+      "sourceRow": 96,
+      "runResultsRow": 96,
       "runResultsCaseKey": "BU-08"
     },
     {
@@ -1666,8 +1565,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "BU-09",
       "suite": "Bulk",
-      "sourceRow": 103,
-      "runResultsRow": 89,
+      "sourceRow": 97,
+      "runResultsRow": 97,
       "runResultsCaseKey": "BU-09"
     },
     {
@@ -1683,8 +1582,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "BU-10",
       "suite": "Bulk",
-      "sourceRow": 104,
-      "runResultsRow": 90,
+      "sourceRow": 98,
+      "runResultsRow": 98,
       "runResultsCaseKey": "BU-10"
     },
     {
@@ -1700,8 +1599,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "BU-11",
       "suite": "Bulk",
-      "sourceRow": 105,
-      "runResultsRow": 91,
+      "sourceRow": 99,
+      "runResultsRow": 99,
       "runResultsCaseKey": "BU-11"
     },
     {
@@ -1717,8 +1616,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "BU-12",
       "suite": "Bulk",
-      "sourceRow": 106,
-      "runResultsRow": 92,
+      "sourceRow": 100,
+      "runResultsRow": 100,
       "runResultsCaseKey": "BU-12"
     },
     {
@@ -1734,8 +1633,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "BU-13",
       "suite": "Bulk",
-      "sourceRow": 107,
-      "runResultsRow": 93,
+      "sourceRow": 101,
+      "runResultsRow": 101,
       "runResultsCaseKey": "BU-13"
     },
     {
@@ -1751,8 +1650,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "BU-14",
       "suite": "Bulk",
-      "sourceRow": 108,
-      "runResultsRow": 94,
+      "sourceRow": 102,
+      "runResultsRow": 102,
       "runResultsCaseKey": "BU-14"
     },
     {
@@ -1768,8 +1667,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "BU-15",
       "suite": "Bulk",
-      "sourceRow": 109,
-      "runResultsRow": 95,
+      "sourceRow": 103,
+      "runResultsRow": 103,
       "runResultsCaseKey": "BU-15"
     },
     {
@@ -1785,8 +1684,8 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "BU-16",
       "suite": "Bulk",
-      "sourceRow": 110,
-      "runResultsRow": 96,
+      "sourceRow": 104,
+      "runResultsRow": 104,
       "runResultsCaseKey": "BU-16"
     },
     {
@@ -1802,26 +1701,26 @@ window.UAT_DATA = {
       "history": "New for this UAT",
       "id": "BU-17",
       "suite": "Bulk",
-      "sourceRow": 111,
-      "runResultsRow": 97,
+      "sourceRow": 105,
+      "runResultsRow": 105,
       "runResultsCaseKey": "BU-17"
     },
     {
       "caseKey": "RP-18 \u2013 Ticket 1850",
       "scope": "Planned",
       "scenarioId": "REPORT UAT 16",
-      "title": "Restrict Access to Recently Generated Reports",
-      "goal": "Confirm a recently generated report is accessible only to its authorised user/session.",
-      "preconditions": "A recently generated report is associated with one authenticated user/session. The tester can access a separate authenticated user/session.",
-      "steps": "Given a report has been generated in a different authenticated user/session\nWhen I sign in using a separate authenticated user/session\nAnd I open Reports and try to view or download the report",
-      "expected": "The report is not available to the separate user/session and cannot be downloaded.",
+      "title": "Require Authentication to Access Recently Generated Reports",
+      "goal": "Confirm a user must be authenticated to access a recently generated report.",
+      "preconditions": "A recently completed report is available in an authenticated session. An unauthenticated browser session is available for testing.",
+      "steps": "Given a recently completed report is available in an authenticated session\nWhen I open Reports or the report download link in an unauthenticated session\nAnd I try to view or download the report",
+      "expected": "The unauthenticated session is required to sign in before the report can be viewed or downloaded.",
       "sourceComments": null,
       "history": "New for this UAT",
       "id": "RP-18",
       "suite": "Reporting",
-      "sourceRow": 112,
-      "runResultsRow": 112,
-      "runResultsCaseKey": "RP-18 -  Ticket 1850"
+      "sourceRow": 106,
+      "runResultsRow": 106,
+      "runResultsCaseKey": "RP-18 - Ticket 1850"
     }
   ]
 };

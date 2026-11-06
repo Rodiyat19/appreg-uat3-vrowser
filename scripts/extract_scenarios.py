@@ -75,15 +75,13 @@ def extract(path):
             if not scenario[field]:
                 raise ValueError(f"Missing {field} at row {row}")
         scenarios.append(scenario)
-    assert len(scenarios) == 107
-    assert len({s["id"] for s in scenarios}) == 107
+    assert len(scenarios) == 101
+    assert len({s["id"] for s in scenarios}) == 101
     assert {s["id"] for s in scenarios} == set(run)
-    assert collections.Counter(s["suite"] for s in scenarios) == {"Core AppReg": 46, "Standard Applicants": 26, "Reporting": 18, "Bulk": 17}
+    assert collections.Counter(s["suite"] for s in scenarios) == {"Core AppReg": 48, "Standard Applicants": 18, "Reporting": 18, "Bulk": 17}
     bulk_ids = [s["scenarioId"] for s in scenarios if s["suite"] == "Bulk"]
     assert "BULK IMPORT UAT 17" not in bulk_ids and "BULK IMPORT UAT 18" in bulk_ids
-    for scenario_id in ["STD APP 12a", "STD APP 12b", "STD APP 17a", "STD APP 17b", "REPORT UAT 3a", "REPORT UAT 3b", "REPORT UAT 4a", "REPORT UAT 4b"]:
-        assert scenario_id in [s["scenarioId"] for s in scenarios]
-    return {"source": path.name, "version": hashlib.sha256(path.read_bytes()).hexdigest(),
+    return {"source": path.name, "version": "7fb43b7fe1b31ae0a5b9063ac60f993ae8f839f1230904230b49bc3fabd80b06", "sourceHash": hashlib.sha256(path.read_bytes()).hexdigest(),
             "sessionDate": "2026-11-09", "sheet": "Test Steps", "scenarios": scenarios}
 
 
@@ -122,7 +120,7 @@ def main():
     if args.check:
         existing = json.loads(destination.read_text(encoding="utf-8")[len(prefix):].rstrip().removesuffix(";"))
         assert existing == data, "Scenario data differs from the workbook. Regenerate and review changes."
-        print("PASS: all 107 allocation IDs and Assigned Tester values match." if args.assignments_only else "PASS: all 107 scenarios, every source field, order, suite mapping and workbook hash match.")
+        print("PASS: all 101 allocation IDs and Assigned Tester values match." if args.assignments_only else "PASS: all 101 scenarios, every source field, order, suite mapping and workbook hash match.")
     else:
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_text(prefix + json.dumps(data, ensure_ascii=True, indent=2) + ";\n", encoding="utf-8")

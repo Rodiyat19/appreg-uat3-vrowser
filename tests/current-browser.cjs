@@ -1,0 +1,18 @@
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const assert=require('node:assert/strict');
+const http=require('node:http');
+const fs=require('node:fs');
+const path=require('node:path');
+const root=path.resolve(__dirname,'..');
+(async()=>{
+ const server=http.createServer((req,res)=>{const file=path.join(root,decodeURIComponent(new URL(req.url,'http://local').pathname==='/'?'/index.html':new URL(req.url,'http://local').pathname));fs.readFile(file,(err,data)=>{if(err){res.writeHead(404);return res.end();}res.setHeader('Content-Type',({'.html':'text/html','.js':'application/javascript','.css':'text/css','.ttf':'font/ttf'})[path.extname(file)]||'application/octet-stream');res.end(data);});});
+ await new Promise(r=>server.listen(0,'127.0.0.1',r));let browser;
+ try{browser=await chromium.launch({headless:true,executablePath:process.env.BROWSER_EXECUTABLE});const context=await browser.newContext();const page=await context.newPage();
+ await page.goto(`http://127.0.0.1:${server.address().port}/`);await page.waitForSelector('.scenario-card');
+ const data=await page.evaluate(()=>({data:window.UAT_DATA,alloc:window.UAT_ALLOCATIONS}));assert.equal(data.data.scenarios.length,101);assert.equal(await page.locator('.scenario-card').count(),101);
+ for(const s of data.data.scenarios){await page.locator(`.scenario-card[data-id="${s.id}"]`).click();for(const [id,key] of Object.entries({'scenario-code':'scenarioId','scenario-heading':'title',goal:'goal',preconditions:'preconditions',steps:'steps',expected:'expected'}))assert.equal(await page.locator('#'+id).textContent(),s[key]);assert.equal(await page.locator('#assigned-tester').textContent(),data.alloc.assignments[s.id]||'Unassigned');}
+ for(const name of [...new Set(Object.values(data.alloc.assignments).filter(Boolean))]){await page.locator('#tester').selectOption('tester:'+name);const cases=data.data.scenarios.filter(s=>data.alloc.assignments[s.id]===name);assert.equal(await page.locator('.scenario-card').count(),cases.length);assert.equal(await page.locator('#total-copy').textContent(),`of ${cases.length} scenarios completed`);}
+ await page.locator('#tester').selectOption('');await page.locator('.scenario-card').first().click();await page.locator('#completing-tester').fill('Test reviewer');await page.getByRole('radio',{name:'Pass',exact:true}).check();await page.locator('#comments').fill('Saved comment');await page.reload();assert.equal(await page.locator('#comments').inputValue(),'Saved comment');assert(await page.getByRole('radio',{name:'Pass',exact:true}).isChecked());const dl=page.waitForEvent('download');await page.locator('#download').click();const download=await dl;await fs.promises.mkdir(path.join(root,'tmp/qa'),{recursive:true});await download.saveAs(path.join(root,'tmp/qa/current-results.pdf'));
+ const old=await browser.newContext();await old.addInitScript(({version,id})=>localStorage.setItem(`appreg-uat:${version}:${id}`,JSON.stringify({outcome:'Fail',comments:'Existing result'})),{version:data.data.version,id:data.data.scenarios[0].id});const p=await old.newPage();await p.goto(`http://127.0.0.1:${server.address().port}/`);await p.waitForSelector('.scenario-card');assert.equal(await p.locator('#comments').inputValue(),'Existing result');assert(await p.getByRole('radio',{name:'Fail',exact:true}).isChecked());console.log('PASS: all 101 scenario fields and assignments, tester filters and progress, saved results, comments, outcomes and PDF download.');
+ }finally{if(browser)await browser.close();await new Promise(r=>server.close(r));}
+})().catch(e=>{console.error(e);process.exitCode=1;});

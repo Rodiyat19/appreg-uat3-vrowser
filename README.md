@@ -1,6 +1,6 @@
 # Application Register UAT scenario browser
 
-A static, accessible scenario browser for the **9 November 2026** UAT. It contains all **107** scenarios from `Application-Register-UAT-2026-11-09-REVIEW-FINAL.xlsx`: Core AppReg (46), Standard Applicants (26), Reporting (18), and Bulk (17).
+A static, accessible scenario browser for the **9 November 2026** UAT. It contains all **101** scenarios from `AppReg-UAT-Business-Allocation (1).xlsx`: Core AppReg (48), Standard Applicants (18), Reporting (18), and Bulk (17).
 
 ## Preview
 
@@ -45,7 +45,7 @@ assets/allocations.js            Assigned Tester values matched by unique case I
 assets/pdf.js                    Direct PDF generation and pagination
 assets/vendor/                   Local PDF libraries, font and licences/notices
 scripts/extract_scenarios.py      Repeatable extraction and exact validation
-tests/browser.cjs                Browser and PDF regression checks
+tests/current-browser.cjs        Current workbook browser and PDF checks
 .nojekyll                        GitHub Pages static-serving marker
 ```
 
@@ -58,20 +58,20 @@ The extractor uses Python's standard library. It retains all ten source columns 
 Regenerate only after an intentional source update:
 
 ```powershell
-python scripts/extract_scenarios.py "C:\path\to\Application-Register-UAT-2026-11-09-REVIEW-FINAL.xlsx"
+python scripts/extract_scenarios.py "C:\path\to\AppReg-UAT-Business-Allocation (1).xlsx"
 ```
 
 Verify the checked-in data without changing files:
 
 ```powershell
-python scripts/extract_scenarios.py "C:\path\to\Application-Register-UAT-2026-11-09-REVIEW-FINAL.xlsx" --check
+python scripts/extract_scenarios.py "C:\path\to\AppReg-UAT-Business-Allocation (1).xlsx" --check
 ```
 
-Validation requires exactly 107 unique cases, the expected suite totals, the existing numbering gaps, and an exact match of every source field and its order. Results use the source workbook's SHA-256 hash plus case code as their local-storage key, so source versions do not mix results.
+Validation requires exactly 101 unique cases, the expected suite totals, and an exact match of every source field and its order. The existing storage namespace and case IDs are retained so saved results for matching cases remain available. Results for cases no longer in the workbook remain in browser storage but are not shown in the current run.
 
 ### Update tester allocations without changing scenarios or results
 
-The current assignments come from `Run Results` → `Assigned Tester` in `Application-Register-UAT-2026-11-09-REVIEW-FINAL (1).xlsx` (the populated copy in Downloads). This copy also contains edits to scenario content. Only assignments were imported: the existing scenario wording, IDs, order, source version and saved-result keys remain unchanged.
+The current assignments come from `Run Results` → `Assigned Tester` in `AppReg-UAT-Business-Allocation (1).xlsx`. Scenario content comes from the same workbook's Test Steps sheet.
 
 ```powershell
 python scripts/extract_scenarios.py "C:\path\to\allocation-workbook.xlsx" --assignments-only
@@ -89,12 +89,12 @@ With Node.js, Playwright, and an installed Chromium-based browser available:
 ```powershell
 $env:PLAYWRIGHT_MODULE = "C:\path\to\node_modules\playwright"
 $env:BROWSER_EXECUTABLE = "C:\Program Files\Google\Chrome\Application\chrome.exe"
-node tests/browser.cjs
+node tests/current-browser.cjs
 ```
 
-The tests start their own static server, check repository-subpath hosting, exact scenario display, outcomes, comments, filtering, navigation, refresh, failed storage, mobile layout and downloads. They generate PDF and screenshot fixtures under ignored `tmp/qa/`. They never change the workbook or the shipped scenario data.
+The current test starts its own static server and checks every scenario's displayed source fields and assignment, tester filtering and progress, saved results, comments and PDF download. It generates a PDF fixture under ignored `tmp/qa/` and does not change the workbook or shipped scenario data. The older `tests/browser.cjs` and `tests/verify_pdf.py` fixtures target the previous 107-case workbook.
 
-For PDF text and page-boundary validation, run `python tests/verify_pdf.py` in an environment with `pypdf` and `pdfplumber`. It verifies every required source field, workbook order, long Unicode comments, all outcomes and completed-only export. Render the generated PDFs with a PDF viewer or Poppler to review their visual layout.
+Render the generated PDF with a PDF viewer or Poppler to review its visual layout.
 
 ## Third-party assets
 
